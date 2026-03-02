@@ -1,24 +1,83 @@
-# Raspberry Pi File Loader
+# RM-012-G Downloader (Raspberry Pi File Loader)
 
-โปรเจกต์ Node.js สำหรับดาวน์โหลดไฟล์จาก Raspberry Pi ไปยังโฟลเดอร์ `data` เครื่อง Local ผ่าน SFTP
+โปรเจกต์สำหรับดาวน์โหลดไฟล์จาก Raspberry Pi ไปยังเครื่อง Local ผ่าน SFTP พร้อมด้วย Web Dashboard สำหรับบริหารจัดการ, ตั้งเวลาดาวน์โหลด (Scheduler) และดู Log แบบเรียลไทม์
 
-## การติดตั้ง
+---
 
-1. ติดตั้งไลบรารีที่จำเป็น (Ensure standard npm is installed):
-   ```bash
-   npm install
-   ```
+## 📥 1. การติดตั้ง (Installation)
 
-2. ตั้งค่ารหัสผ่าน:
-   - ทำการคัดลอกไฟล์ `.env.example` เป็น `.env`
-   - เปิดไฟล์ `.env` แล้วแก้ไข `SFTP_PASSWORD` ให้เป็นรหัสผ่านของเครื่อง Raspberry Pi
+โปรแกรมออกแบบมาให้ติดตั้งและทำงานอยู่เบื้องหลังใน Windows ได้อย่างสมบูรณ์แบบ
+1. โหลดซอร์สโค้ดมาไว้ที่เครื่อง
+2. ดับเบิลคลิกไฟล์ **`install.cmd`** 
+3. ระบบจะทำการคัดลอกไฟล์ทั้งหมดไปที่ `C:\RM012G_BackupStorage` อัตโนมัติ
+4. ติดตั้ง `npm packages` ให้พร้อมใช้งาน
+5. สร้าง Shortcut ชื่อ **`RM-012-G Downloader`** ไว้ที่ Desktop สำหรับใช้ควบคุมโปรแกรม
 
-## การใช้งาน
+![app icon](./images/0.1%20app%20icon.png)
 
-รันคำสั่งด้านล่างเพื่อเริ่มการดาวน์โหลด:
+---
 
-```bash
-npm start
-```
+## ⚙️ 2. การควบคุมระบบ (Start, Stop, Restart)
 
-โปรแกรมจะทำการเชื่อมต่อไปที่ `pi@10.222.1.3` และดาวน์โหลดไฟล์ทั้งหมดจาก `/media/pi/sdcaed/csv` (หรือ path ที่กำหนด) มาเก็บไว้ในโฟลเดอร์ `data` ในโปรเจกต์นี้
+เมื่อการติดตั้งเสร็จสิ้น คุณจะสามารถควบคุมโปรแกรมผ่าน **Shortcut บน Desktop** (RM-012-G Downloader)
+เมื่อดับเบิลคลิกที่ Shortcut จะปรากฏหน้าต่าง Control Panel สีดำ (PowerShell) ที่มีเมนูให้เลือกดังนี้:
+
+![select for start](./images/0.2%20select%20for%20start.png)
+
+จากนั้นกด 1 เพื่อ Start Server:
+
+![after start](./images/0.3%20after%20start.png)
+
+- **[1] Start Server / Open Browser**: ใช้สำหรับเปิดระบบ หากระบบทำงานอยู่แล้วจะเป็นการเปิดหน้าเว็บ Dashboard ขึ้นมาบนเบราว์เซอร์
+- **[2] Stop Server**: ใช้สำหรับสั่งปิดการทำงานของโปรแกรมทั้งหมด (จบการทำงานเบื้องหลัง)
+- **[3] Restart Server**: ใช้สำหรับปิดและเริ่มระบบใหม่
+- **[4] Exit**: ปิดหน้าต่าง Control Panel (แต่เซิร์ฟเวอร์ยังคงทำงานอยู่เบื้องหลังต่อไป)
+
+---
+
+## 🔒 3. เริ่มต้นใช้งานครั้งแรก (Setup & Authentication)
+
+เนื่องจากระบบมีการรักษาความปลอดภัย การเปิดใช้งานครั้งแรกจะต้องทำการสร้างบัญชีผู้ใช้
+1. เมื่อเปิดหน้าเว็บครั้งแรก (ผ่าน Control Panel) ระบบจะพาไปที่หน้าตั้งค่า รหัสผ่าน (Setup)
+
+![signup](./images/1.signup.png)
+
+2. จากนั้นในครั้งต่อไป ระบบจะบังคับให้ **เข้าสู่ระบบ (Sign In)** เสมอ
+
+![signin](./images/2.signin.png)
+
+![started](./images/3.started.png)
+
+---
+
+## 💻 4. การจัดการ Client และเริ่มต้นดาวน์โหลด
+
+หลังจากเข้าสู่ระบบสำเร็จ จะพบกับหน้า Dashboard หลัก คุณสามารถจัดการเครื่องเป้าหมาย (Clients) ได้ดังนี้
+
+1. **เพิ่มเครื่องเป้าหมาย (Add Client)**
+   ระบุ IP, Username, รหัสผ่าน (หรือเลือกใช้ Key) และ Directory ปลายทาง
+
+   ![add client](./images/4.add%20client.png)
+
+2. **ระบบพร้อมใช้งาน**
+   เมื่อบันทึกข้อมูลแล้ว Client จะมาอยู่ในรายการพร้อมให้สั่งการ
+
+   ![client ready](./images/4.clien%20readyt.png)
+
+3. **สั่ง Start Scheduler / Download**
+   คุณสามารถเปิดการทำงานให้ระบบดึงข้อมูลอัตโนมัติ (Scheduler) โดยคลิกปุ่ม Start
+
+   ![client start](./images/5.client%20start.png)
+
+4. **เริ่มดาวน์โหลดไฟล์**
+   ระบบจะทำการดาวน์โหลดไฟล์แบบ Smart Download (เฉพาะไฟล์ใหม่/ไฟล์ที่มีการเปลี่ยน) พร้อมแสดง Log ให้เห็นสถานะแบบเรียลไทม์
+
+   ![start download](./images/6.start%20download.png)
+
+---
+
+## โครงสร้าง Directory หลังติดตั้ง (`C:\RM012G_BackupStorage`)
+- `.config/`: โฟลเดอร์เก็บข้อมูลรหัสผ่านและ Security Token ที่เข้ารหัสไว้
+- `data/`: ไดเรกทอรีสำหรับเก็บไฟล์ดาวน์โหลด (สามารถแยกย่อยเป็นโฟลเดอร์ตาม Client ได้)
+- `scripts/`: สคริปต์สำหรับระบบเบื้องหลัง (VBS, PS1)
+- `server.js` / `downloader.js`: Core logic ของระบบ
