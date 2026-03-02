@@ -1,6 +1,6 @@
-# RM-012-G Downloader (Raspberry Pi File Loader)
+# RM-012-G Downloader (Primus File Loader)
 
-โปรเจกต์สำหรับดาวน์โหลดไฟล์จาก Raspberry Pi ไปยังเครื่อง Local ผ่าน SFTP พร้อมด้วย Web Dashboard สำหรับบริหารจัดการ, ตั้งเวลาดาวน์โหลด (Scheduler) และดู Log แบบเรียลไทม์
+โปรเจกต์สำหรับดาวน์โหลดไฟล์จาก Primus ไปยังเครื่อง Local ผ่าน SFTP พร้อมด้วย Web Dashboard สำหรับบริหารจัดการ, ตั้งเวลาดาวน์โหลด (Scheduler) และดู Log แบบเรียลไทม์
 
 ---
 
