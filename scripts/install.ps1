@@ -11,7 +11,7 @@ try {
     $wshell = New-Object -ComObject WScript.Shell
     $shortcut = $wshell.CreateShortcut("$desktop\RM-012-G Downloader.lnk")
     $shortcut.TargetPath = "powershell.exe"
-    $shortcut.Arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$ps1`""
+    $shortcut.Arguments = "-WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -File `"$ps1`""
     $shortcut.WorkingDirectory = $dest
     $shortcut.WindowStyle = 1
     $shortcut.IconLocation = "C:\Windows\System32\imageres.dll,109"

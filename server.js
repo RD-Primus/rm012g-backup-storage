@@ -139,18 +139,8 @@ app.post('/api/download/:id', auth.requireAuth, async (req, res) => {
 });
 
 // ─── Start ────────────────────────────────────────────────
-const { exec } = require('child_process');
-
-function openBrowser(url) {
-  const cmd = process.platform === 'win32' ? `start "" "${url}"`
-    : process.platform === 'darwin' ? `open "${url}"`
-      : `xdg-open "${url}"`;
-  exec(cmd, err => { if (err) console.warn('[Browser] Could not auto-open:', err.message); });
-}
-
 app.listen(PORT, () => {
   const url = `http://localhost:${PORT}`;
   console.log(`Server running on ${url}`);
   console.log(`Dashboard: ${url}`);
-  openBrowser(url);
 });
