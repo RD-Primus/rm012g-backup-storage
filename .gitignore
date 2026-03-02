@@ -1,0 +1,5 @@
+node_modules/
+.config/SECURITY_TOKEN
+.config/credentials
+.config/users.json
+data*/
