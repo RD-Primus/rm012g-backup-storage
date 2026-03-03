@@ -306,6 +306,50 @@ body {
     border: 1px solid var(--border);
 }
 
+/* ── Progress Bar ─────────────────────────────────────── */
+.progress-wrapper {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 14px; /* Fix height to prevent jumping */
+}
+
+.progress-track {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    height: 6px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border);
+}
+
+[data-theme="light"] .progress-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 6px;
+}
+
+.progress-text {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: monospace;
+    min-width: 70px;
+    text-align: right;
+    display: none;
+}
+
+.progress-text.active {
+    display: inline-block;
+}
+
 /* ── Client Actions ───────────────────────────────────── */
 .client-actions {
     display: flex;

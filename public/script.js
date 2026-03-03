@@ -69,6 +69,36 @@ function setupSSELogs() {
       terminal.scrollTop = terminal.scrollHeight;
     } catch { }
   };
+
+  es.addEventListener('progress', (e) => {
+    try {
+      const p = JSON.parse(e.data);
+      updateProgressBar(p.clientId, p.percent, p.current, p.total);
+    } catch { }
+  });
+}
+
+function updateProgressBar(id, percent, current, total) {
+  const bar = document.getElementById(`progress-bar-${id}`);
+  const text = document.getElementById(`progress-text-${id}`);
+  // If the elements don't exist yet, we can't update them
+  if (!bar || !text) return;
+
+  bar.style.width = `${percent}%`;
+
+  // Show detailed text, e.g., 45% (45/100)
+  text.textContent = `${percent}% (${current}/${total})`;
+  text.className = 'progress-text active';
+
+  // If complete or starting, reset slightly
+  if (percent === 100 || total === 0) {
+    setTimeout(() => {
+      bar.style.width = '0%';
+      text.textContent = '';
+      text.className = 'progress-text';
+    }, 4000); // hide after a few seconds
+  }
+
 }
 
 function escapeHtml(str) {
@@ -126,6 +156,12 @@ function clientCard(c) {
       <span id="countdown-${c.id}" class="countdown ${running ? '' : 'stopped'}">
         ${running ? 'Calculating...' : '— Stopped —'}
       </span>
+    </div>
+    <div class="progress-wrapper">
+      <div class="progress-track">
+        <div id="progress-bar-${c.id}" class="progress-fill" style="width: 0%;"></div>
+      </div>
+      <span id="progress-text-${c.id}" class="progress-text"></span>
     </div>
     <div class="client-actions">
       <button id="toggle-${c.id}" class="btn ${running ? 'btn-stop' : 'btn-start'}">

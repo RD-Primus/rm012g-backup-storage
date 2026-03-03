@@ -87,8 +87,13 @@ app.get('/api/logs', (req, res) => {
   res.flushHeaders();
   logHistory.forEach(e => res.write(`data: ${JSON.stringify(e)}\n\n`));
   const listener = e => res.write(`data: ${JSON.stringify(e)}\n\n`);
+  const progressListener = p => res.write(`event: progress\ndata: ${JSON.stringify(p)}\n\n`);
   logEmitter.on('log', listener);
-  req.on('close', () => logEmitter.off('log', listener));
+  logEmitter.on('progress', progressListener);
+  req.on('close', () => {
+    logEmitter.off('log', listener);
+    logEmitter.off('progress', progressListener);
+  });
 });
 
 // Clients CRUD

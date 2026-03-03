@@ -1,7 +1,8 @@
 {
-  "name": "filesloading",
-  "version": "1.0.0",
-  "description": "Download files from Primus",
+  "name": "rm012g-filesloading",
+  "version": "1.0.1",
+  "update": "2026-03-03",
+  "description": "RM-012-G Download files from Primus",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
